@@ -1,5 +1,4 @@
-import User from "../models/user.models.js";
-
+import { User } from "../models/user.models.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import mongoose from "mongoose";
@@ -17,6 +16,7 @@ const generateRefreshToken = async (user) => {
   return refreshToken;
 };
 
+//It is working
 export const registerUser = async (req, res) => {
   try {
     console.log("Entering registerUser");
@@ -56,8 +56,6 @@ export const registerUser = async (req, res) => {
     res.status(500).json({ message: "Internal server error" }); // Handle unexpected errors gracefully
   }
 };
-
-
 function validateUserInput(name, email, password, phone) {
   const errors = [];
 
@@ -79,19 +77,10 @@ function validateUserInput(name, email, password, phone) {
 
   return errors;
 }
-
-
-
-
-
-
-
-
-
-
+//It is working
 export const loginUser = async (req, res) => {
   try {
-    const user = await userSchema.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: req.body.email });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -109,9 +98,18 @@ export const loginUser = async (req, res) => {
   }
 };
 
+
+//It is working
 export const getUserProfile = async (req, res) => {
   try {
-    const user = await userSchema.findById(req.user.userId);
+    console.log("req.user:", req.user);
+    const user = await User.findById(req.user._id, { password: 0 }); // Exclude password
+
+//     The key password corresponds to a field in your user schema.
+// By setting the value to 0, you're instructing Mongoose to exclude the password field from the retrieved document. This ensures that the password is not returned in the response sent to the client.
+
+    //const user = await User.findById(req.user._id);
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -121,9 +119,10 @@ export const getUserProfile = async (req, res) => {
   }
 };
 
+
 export const updateUserProfile = async (req, res) => {
   try {
-    const user = await userSchema.findByIdAndUpdate(req.user.userId, req.body, { new: true });
+    const user = await User.findByIdAndUpdate(req.user._id, req.body, { new: true });
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }

@@ -29,4 +29,6 @@ const userSchema = new mongoose.Schema(
 
 userSchema.plugin(mongooseAggregatePaginate);
 
-module.exports = mongoose.model('User', userSchema); // Export the model
+const User = mongoose.model("User", userSchema);
+
+export { User };

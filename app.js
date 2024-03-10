@@ -28,11 +28,11 @@ app.use('/api/users', userRoutes);
 
 // app.use('/api/movies', movieRoutes);
 
-// app.use('/api/theaters', theaterRoutes);
+ app.use('/api/theaters', theaterRoutes);
 
-// app.use('/api/shows', showRoutes);
+app.use('/api/shows', showRoutes);
 
-// app.use('/api/events', eventRoutes); // Mount event routes
+app.use('/api/event', eventRoutes); // Mount event routes
 
 // app.use('/api/bookings', bookingRoutes);
 

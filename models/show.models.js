@@ -36,4 +36,6 @@ const showSchema = new Schema(
   }
 );
 
-export default showSchema;
+const Show = mongoose.model("Show", showSchema);
+
+export { Show };

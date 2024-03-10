@@ -1,10 +1,11 @@
-import theaterSchema from "../models/theater.models.js";
-import showSchema from "../models/show.models.js";
-
+import { Show } from "../models/show.models.js";
+import { Theater } from "../models/theater.models.js";
+// It is working  well
 export const createTheater = async (req, res) => {
   try {
-    const theater = new theaterSchema(req.body);
+    const theater = new Theater(req.body);
     await theater.save();
+    console.log("Reached here")
     res.status(201).json(theater);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -13,7 +14,7 @@ export const createTheater = async (req, res) => {
 
 export const getTheaters = async (req, res) => {
   try {
-    const theaters = await theaterSchema.find({});
+    const theaters = await Theater.find({});
     res.status(200).json(theaters);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -22,7 +23,7 @@ export const getTheaters = async (req, res) => {
 
 export const getTheaterById = async (req, res) => {
   try {
-    const theater = await theaterSchema.findById(req.params.id);
+    const theater = await Theater.findById(req.params.id);
     if (!theater) {
       return res.status(404).json({ message: 'Theater not found' });
     }
@@ -34,7 +35,7 @@ export const getTheaterById = async (req, res) => {
 
 export const updateTheater = async (req, res) => {
   try {
-    const theater = await theaterSchema.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const theater = await Theater.findByIdAndUpdate(req.params.id, req.body, { new: true });
     if (!theater) {
       return res.status(404).json({ message: 'Theater not found' });
     }
@@ -46,11 +47,12 @@ export const updateTheater = async (req, res) => {
 
 export const deleteTheater = async (req, res) => {
   try {
-    const theater = await theaterSchema.findByIdAndDelete(req.params.id);
+    const theater = await Theater.findByIdAndDelete(req.params.id);
     if (!theater) {
       return res.status(404).json({ message: 'Theater not found' });
     }
-    await showSchema.deleteMany({ theater: theater._id });
+    const df = await Show.deleteMany({ theater: theater._id });
+    console.log(df)
     res.status(200).json({ message: 'Theater deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });

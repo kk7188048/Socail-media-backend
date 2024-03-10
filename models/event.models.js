@@ -39,4 +39,6 @@ const eventSchema = new mongoose.Schema({
 
 eventSchema.plugin( mongooseAggregatePaginate)
 // adds pagination support to the MongoDB aggregation framework. It's particularly useful when you want to perform complex queries and aggregations on large datasets and need to paginate the results.
-export default eventSchema;
+const Event = mongoose.model("Event", eventSchema);
+
+export { Event };

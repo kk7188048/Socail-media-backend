@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/show', showController.createShow);
 router.get('/show', showController.getShows);
-router.get('/shoow/:id', showController.getShowById);
+router.get('/show/:id', showController.getShowById);
 router.put('/show/:id', showController.updateShow);
 router.delete('/show/:id', showController.deleteShow);
 

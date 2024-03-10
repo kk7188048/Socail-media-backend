@@ -32,4 +32,6 @@ const bookingSchema = new Schema(
   }
 );
 
-export default bookingSchema;
+const Book = mongoose.model("Book", bookingSchema);
+
+export { Book };

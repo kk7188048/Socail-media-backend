@@ -1,7 +1,8 @@
-import showSchema from '../models/show.models.js';
-import movieSchema from '../models/movie.models.js';
-import theaterSchema from '../models/theater.models.js';
-import bookingSchema from '../models/booking.models.js';
+import { Show } from '../models/show.models.js';
+import { Movie } from '../models/movie.models.js';
+import { Theater } from '../models/theater.models.js';
+import { Book } from '../models/booking.models.js';
+
 
 export const createShow = async (req, res) => {
   try {

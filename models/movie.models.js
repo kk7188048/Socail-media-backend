@@ -38,4 +38,6 @@ const movieSchema = new Schema(
   }
 );
 
-export default movieSchema;
+const Movie = mongoose.model("Movie", movieSchema);
+
+export { Movie };
