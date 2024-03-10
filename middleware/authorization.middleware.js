@@ -1,7 +1,7 @@
 import { ApiError } from "./apiError.middleware.js";
 import { asyncHandler } from "./asyncHandler.js";
 
-export const checkRoles = (roles = []) => {
+const checkRoles = (roles = []) => {
   return asyncHandler(async (req, res, next) => {
     try {
       const user = req.user;
@@ -14,3 +14,5 @@ export const checkRoles = (roles = []) => {
     }
   });
 };
+
+export default checkRoles;

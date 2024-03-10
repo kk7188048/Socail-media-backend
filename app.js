@@ -1,24 +1,40 @@
 import express from "express"
 import cors from "cors"
-import dotenv from "dotenv"
-import connectDB from "./database.js";
+import cookieParser from 'cookie-parser';
 
-dotenv.config({
-    path: ".env",
-}); //It helps to load .env fiel
 const app =  express()
-app.use(express.json())
+// app.use(cors({
+//     origin: process.env.CORS_ORIGIN,
+//     credentials: true,
+// }))
 app.use(cors())
+app.use(express.json({ limit: "20kb" }));
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(express.static("public"));
+
+import userRoutes from './routers/user.routers.js';
+import movieRoutes from './routers/movie.routers.js';
+import theaterRoutes from './routers/theater.router.js';
+import showRoutes from './routers/show.routers.js';
+import bookingRoutes from './routers/booking.routers.js';
+import { authenticate } from "./middleware/auth.middleware.js";
+import eventRoutes from './routers/event.routers.js'; // Import event routes
 
 
-connectDB().
-then(()=>{
-    const port = process.env.PORT || 5000;
-    app.listen(port, ()=>{
-        console.log(`Server is running at port: ${port}`);
-    });
-}).
-catch((error)=>{
-    console.error("Error in MongoDB starting server", error)
-})// We need to tackle error always to debug properly
+app.use('/api/users', userRoutes);
 
+// app.use(authMiddleware);
+
+// app.use('/api/movies', movieRoutes);
+
+// app.use('/api/theaters', theaterRoutes);
+
+// app.use('/api/shows', showRoutes);
+
+// app.use('/api/events', eventRoutes); // Mount event routes
+
+// app.use('/api/bookings', bookingRoutes);
+
+
+export {app}
